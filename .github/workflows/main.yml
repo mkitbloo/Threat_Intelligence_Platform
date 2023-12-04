@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: tip_django
+=======
+name: tip_workflow
+>>>>>>> 8967a0a431d0268b2b10cfc47d57250930922226
 on:
   workflow_call:
   workflow_dispatch:
@@ -11,6 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+<<<<<<< HEAD
       -name: Checkout
       uses: actions/checkout@v2
       -name: Set up Python
@@ -22,3 +27,21 @@ jobs:
       -name: Run Tests
       run: |
         python manage.py test
+=======
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+
+      - name: Install Dependencies
+        run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            
+      - name: Run Tests
+        run: |
+            python manage.py test
+>>>>>>> 8967a0a431d0268b2b10cfc47d57250930922226
