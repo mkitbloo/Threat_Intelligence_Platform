@@ -21,6 +21,7 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
 
+
 </head>
 
 <body id="page-top">
@@ -294,8 +295,31 @@
                 </nav>
                 <!-- End of Topbar -->
 
+                <div class="container-fluid" id="uploadSection">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card shadow mb-4">
+                          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Upload Section</h6>
+                          </div>
+                          <div class="card-body">
+                            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                <label for="fileInput">Choose a File</label>
+                                <input type="file" class="form-control-file" id="fileInput" name="file">
+                              </div>
+                              <button type="submit" class="btn btn-primary">Upload</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                
+                    </div>
+                  </div>
+
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="d-none" id="analysisSection">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -391,75 +415,169 @@
                     <!-- Content Row -->
 
                     <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+                        <!-- node link Overview -->
+                        <div class="col-lg-12 mb-4">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Patterns and Analytics</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                <!-- Card Header -->
+                                <div class="card-header py-3">
+                                    <div class="row align-items-center">
+                                        <!-- Chart Title -->
+                                        <div class="col">
+                                            <h6 class="m-0 font-weight-bold text-primary">Network Traffic Overview</h6>
+                                        </div>
+                                        <!-- Dropdown -->
+                                        <div class="col text-right">
+                                            <label for="dataViewSelector" class="mr-2" style="font-size: 0.8em">Select Traffic Overview: </label>
+                                            <select id="dataViewSelector" class="custom-select custom-select-sm" style="width: 200px; font-size: 0.8em;">
+                                                <option value="protocol">Protocol Distribution</option>
+                                                <option value="sourceIP">Source IP Distribution</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                    <div class="chart-bar pt-4 pb-2">
+                                        <canvas id="overview_graph">{{ overview|safe }}</canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Area Chart -->
+                        <div class="col-lg-6 mb-4">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Automated Response Actions</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                <!-- Card Header -->
+                                <div class="card-header py-3">
+                                    <div class="row align-items-center">
+                                        <!-- Chart Title -->
+                                        <div class="col">
+                                            <h6 class="m-0 font-weight-bold text-primary">Protocol Distribution</h6>
+                                        </div>
+                                        <!-- Card Header - Dropdown -->
+                                        <div class="col text-right d-flex align-items-center justify-content-end" style="flex-wrap: nowrap;">
+
+                                            <div class="d-flex align-items-center" style="margin-right: 15px; white-space: nowrap;">
+                                                <!-- Data Type Dropdown -->
+                                                <label for="dataTypeSelector" style="margin-right: 5px; font-size: 0.8em;">Choose Data Category:</label>
+                                                <select id="dataTypeSelector" class="custom-select custom-select-sm" style="width: 150px; font-size: 0.8em;">
+                                                    <option value="volume">Data Volume</option>
+                                                    <option value="packets">Packet Count</option>
+                                                    <option value="sessions">Session Count</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="d-flex align-items-center" style="white-space: nowrap;">
+                                                <!-- Time Range Dropdown -->
+                                                <label for="timeRangeSelector" style="margin-right: 5px; font-size: 0.8em;">Select Time Range:</label>
+                                                <select id="timeRangeSelector" class="custom-select custom-select-sm" style="width: 150px; font-size: 0.8em;">
+                                                    <option value="hourly">Hourly</option>
+                                                    <option value="daily">Daily</option>
+                                                    <option value="weekly">Weekly</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
+                                    <div class="chart-area" style="height: 300px;">
+                                        <canvas id="pcapAreaChart">
+                                        </canvas>
                                     </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Pie Chart -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header -->
+                                <div class="card-header py-3">
+                                    <div class="row align-items-center">
+                                        <!-- Chart Title -->
+                                        <div class="col">
+                                            <h6 class="m-0 font-weight-bold text-primary">Daily Traffic Distribution</h6>
+                                        </div>
+                                <!-- Data Type Dropdown for Pie Chart -->
+                                <div class="col text-right">
+                                    <label for="pieDataTypeSelector" class="mr-2" style="font-size: 0.8em;">Select Data View:</label>
+                                    <select id="pieDataTypeSelector" class="custom-select custom-select-sm" style="width: 200px; font-size: 0.8em;">
+                                        <option value="domainName">Daily Domain Name Traffic</option>
+                                        <option value="geoLocation">Geographic Location Traffic</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie" style="height: 300px;">
+                                        <canvas id="pcapPieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Bar Chart -->
+                        <div class="col-lg-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header -->
+                                <div class="card-header py-3">
+                                    <div class="row align-items-center">
+                                        <!-- Chart Title -->
+                                        <div class="col">
+                                            <h6 class="m-0 font-weight-bold text-primary">Network Traffic Overview</h6>
+                                        </div>
+                                    <!-- Dropdown -->
+                                    <div class="col text-right">
+                                        <label for="dataViewSelector" class="mr-2" style="font-size: 0.8em">Select Traffic Overview: </label>
+                                        <select id="dataViewSelector" class="custom-select custom-select-sm" style="width: 200px; font-size: 0.8em;">
+                                            <option value="protocol">Protocol Distribution</option>
+                                            <option value="sourceIP">Source IP Distribution</option>
+                                    </select>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-bar pt-4 pb-2">
+                                        <canvas id="networkTrafficBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Spider Chart -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">PCAP Analysis Overview</h6>
+                                    <!-- Add any additional controls or information here -->
+                                </div>
+                                <div class="card-body" >
+                                    <div class="chart-spider" style="height: 500px;">
+                                        <canvas id="pcapAnalysisSpiderChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bubble Chart -->
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Network Data Visualization</h6>
+                                    <!-- Add any additional controls or information here -->
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bubble" style="height: 500px;">
+                                        <canvas id="networkDataBubbleChart"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -674,7 +792,12 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'js/demo/chart-area-demo.js'%}"></script>
     <script src="{% static 'js/demo/chart-pie-demo.js'%}"></script>
-
+    <script src="{% static 'js/pcapAreaChart.js' %}"></script>
+    <script src="{% static 'js/pcapPieChart.js' %}"></script>
+    <script src="{% static 'js/pcapBarChart.js' %}"></script>
+    <script src="{% static 'js/pcapSpiderChart.js' %}"></script>
+    <script src="{% static 'js/pcapBubbleChart.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>
