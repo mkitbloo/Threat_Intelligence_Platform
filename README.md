@@ -87,3 +87,9 @@ Thanks to the open-source community for valuable tools and libraries used in thi
 - VITTHAL SATIJA_
 
 
+=======
+# Threat-Intelligence-Platform
+This tool integrates advanced threat analysis, machine learning, and user-friendly interfaces. 
+
+# How to run
+python manage.py runserver
