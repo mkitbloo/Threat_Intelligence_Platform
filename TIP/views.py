@@ -24,12 +24,22 @@ def home(request):
             
             context = {
                 'success': True,
-                'overview': overview,
+                'overview_graph': mark_safe(overview),
+            }
+            
+            return JsonResponse(context)
+
+        else:
+            context = {
+                'success': False,
+                'form': form.errors,
             }
 
-            return HttpResponse(JsonResponse(context), content_type='application/json')
+            return JsonResponse(context)
 
-    else:
-        form = UploadFileForm()
+    form = UploadFileForm()
+    context = {
+        'form': form,
+    }
 
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', context)
