@@ -13,7 +13,7 @@ $(document).ready(function() {
             contentType: false,
             success: function(data) {
                 if (data.success) {
-                    $('#overview_graph').html(data.overview);
+                    $('#overview_graph').html(data.overview_graph);
                     
                     // hide the upload section
                     $('#uploadSection').addClass('d-none');
@@ -22,10 +22,12 @@ $(document).ready(function() {
                     $('#analysisSection').removeClass('d-none');
                     $('#analysisSection').addClass('container-fluid');
                 } else {
+                    alert(data.error);
                     $('#analysisSection').html(data.error);
                 }
                 
             }, error: function(data) {
+                alert(data.error);
                 $('#analysisSection').html(data.error);
             }
         });
