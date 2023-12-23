@@ -5,7 +5,7 @@
 The Threat Intelligence Platform (TIP) is a cybersecurity solution designed to empower security analysts with enhanced tools for threat detection and intelligence generation. The platform integrates advanced threat analysis, machine learning, and user-friendly interfaces to provide a comprehensive solution for small and medium-sized businesses (SMBs).
 
 ## Features
-
+## As of Trimester 3, 2023, only UI is done amongst those features below. Backend should be implemented
 - **Network Analysis:**
   - Create a graph of traffic flow between endpoints.
   - Detect domain generation algorithms in DNS requests.
