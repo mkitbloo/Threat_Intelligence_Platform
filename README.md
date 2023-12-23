@@ -66,26 +66,10 @@ Create a pull request
 This project is licensed under the MIT License.
 
 ### Acknowledgments
-Thanks to the open-source community for valuable tools and libraries used in this project.
+Thanks to the open-source community for the valuable tools and libraries used in this project.
 
-- ADITYA SHEORAN
-- ANKIT PRAKASH
-- DANIELLE DIMAKIS
-- HALIM PURNAMA
-- HAROON MOHAMED NAYEEM
-- IVAN AU-YEUNG
 - JOHN BATES
-- KARAN ASHOK PAREKH
-- LACHLAN ADAMS - Stream lead (cyber security), Malware analysis
-- MARIE CHOI- Senior co-lead, Development, Threat Intel, AI
-- MD JALAL FEROJ
-- NIKS PANSURIA
-- PERRY JAMES MCGLASHAN
-- RADS ORARI
-- SADIA ANIKA MUMU - Junior co-lead, Malware analysis
-- STEVEN SHAO
-- VITTHAL SATIJA_
-
+- MARIE CHOI
 
 =======
 # Threat-Intelligence-Platform
