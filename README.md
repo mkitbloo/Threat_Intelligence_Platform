@@ -32,7 +32,7 @@ The Threat Intelligence Platform (TIP) is a cybersecurity solution designed to e
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/threat-intelligence-platform.git
+   git clone https://github.com/mkitbloo/threat-intelligence-platform.git
 2. **Install Dependencies
 ```pip install -r requirements.txt```
 
